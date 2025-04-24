@@ -1,6 +1,6 @@
-import { ListItem, ListItemText, Checkbox, IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Task } from "../types/Task";
+import { Checkbox } from "@/components/ui/checkbox"
+import { Card } from "@/components/ui/card"
+import Task from '../types/Task';
 
 interface TaskItemProps {
   task: Task;
@@ -8,21 +8,17 @@ interface TaskItemProps {
   onDelete: (id: number) => void;
 }
 
+
 export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
   return (
-    <ListItem
-      key={task.id}
-      secondaryAction={
-        <IconButton edge="end" color="error" onClick={() => onDelete(task.id)}>
-          <DeleteIcon />
-        </IconButton>
-      }
-    >
-      <Checkbox checked={task.completed} onChange={() => onToggle(task.id)} />
-      <ListItemText
-        primary={task.text}
-        sx={{ textDecoration: task.completed ? "line-through" : "none" }}
+    <div className="flex items-center gap-2">
+      <Checkbox
+        checked={task.completed}
+        onCheckedChange={() => onToggle(task.id)}
       />
-    </ListItem>
+      <span className={task.completed ? 'line-through text-muted-foreground' : ''}>
+        {task.text}
+      </span>
+    </div>
   );
 }

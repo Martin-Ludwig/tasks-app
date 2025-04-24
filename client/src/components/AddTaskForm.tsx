@@ -1,38 +1,33 @@
 import { useState } from "react";
-import { TextField, Button, Box } from "@mui/material";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 interface AddTaskFormProps {
-  onAddTask: (text: string) => void;
+  setNewTask: (task: string) => void;
 }
 
+export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
+  const [newTask, setNewTaskLocal] = useState("");
 
-export default function AddTaskForm({ onAddTask }: AddTaskFormProps) {
-  const [newTodo, setNewTask] = useState("");
-
-  const handleSubmit = () => {
-    if (!newTodo.trim()) return;
-    onAddTask(newTodo);
-    setNewTask("");
+  const onSubmit = () => {
+    if (newTask && newTask.trim() !== "") {
+      setNewTask(newTask);
+      setNewTaskLocal("");
+    }
   };
 
   return (
-    <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-      <TextField
-        label="Neue Aufgabe"
-        variant="outlined"
-        fullWidth
-        value={newTodo}
-        onChange={(e) => setNewTask(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && handleSubmit()}
+    <div className="flex gap-2">
+      <Input
+        type="text"
+        placeholder="Neue Aufgabe"
+        value={newTask} 
+        onChange={e => setNewTaskLocal(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
+        className="flex-1"
       />
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={handleSubmit}
-        sx={{ textTransform: 'none' }}
-      >
-        Hinzufügen
-      </Button>
-    </Box>
+      {/* //className="bg-black text-white" */}
+      <Button onClick={onSubmit} >Hinzufügen</Button>
+    </div>
   );
 }

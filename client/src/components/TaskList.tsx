@@ -1,6 +1,5 @@
-import { List } from "@mui/material";
-import TaskItem from "./TaskItem";
-import { Task } from "../types/Task";
+import TaskItem from './TaskItem';
+import Task from '../types/Task';
 
 interface TaskListProps {
   tasks: Task[];
@@ -10,7 +9,7 @@ interface TaskListProps {
 
 export default function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskListProps) {
   return (
-    <List>
+    <div>
       {tasks.map((task) => (
         <TaskItem
           key={task.id}
@@ -19,6 +18,6 @@ export default function TaskList({ tasks, onToggleTask, onDeleteTask }: TaskList
           onDelete={onDeleteTask}
         />
       ))}
-    </List>
+    </div>
   );
 }
