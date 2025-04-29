@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import TaskInput from "./ui/TaskInput";
 
 interface AddTaskFormProps {
   setNewTask: (task: string) => void;
@@ -17,17 +18,22 @@ export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
   };
 
   return (
-    <div className="flex gap-2">
-      <Input
+    <div className="block relative h-12 mb-8 flex gap-2">
+      <TaskInput
+        autoFocus 
         type="text"
         placeholder="Neue Aufgabe"
-        value={newTask} 
-        onChange={e => setNewTaskLocal(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && onSubmit()}
-        className="flex-1"
+        value={newTask}
+        onChange={(e) => setNewTaskLocal(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onSubmit()}
+        className="h-full text-lg "
       />
-      {/* //className="bg-black text-white" */}
-      <Button onClick={onSubmit} >Hinzufügen</Button>
+      <Button
+        onClick={onSubmit}
+        className="absolute right-2 top-1/2 size-8 -translate-y-1/2"
+      >
+        +
+      </Button>
     </div>
   );
 }
