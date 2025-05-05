@@ -9,7 +9,7 @@ export default defineConfig( ({ mode }) => {
 
 
   return ({
-    base: JSON.stringify(env.VITE_BASE_URL) || '/',
+    base: env.VITE_BASE_URL || '/',
     plugins: [react(), tailwindcss(),],
     resolve: {
       alias: {
