@@ -4,10 +4,10 @@ import Task from '../types/Task';
 interface TaskListProps {
   tasks: Task[];
   onChangeState: (id: number, state: number) => void;
-  onDeleteTask: (id: number) => void;
+  //onDeleteTask: (id: number) => void;
 }
 
-export default function TaskList({ tasks, onChangeState, onDeleteTask }: TaskListProps) {
+export default function TaskList({ tasks, onChangeState }: TaskListProps) {
   return (
     <div className="my-3">
       {tasks.map((task) => (
@@ -15,7 +15,7 @@ export default function TaskList({ tasks, onChangeState, onDeleteTask }: TaskLis
           key={task.id}
           task={task}
           onChangeState={onChangeState}
-          onDelete={onDeleteTask}
+          //onDelete={onDeleteTask}
         />
       ))}
     </div>

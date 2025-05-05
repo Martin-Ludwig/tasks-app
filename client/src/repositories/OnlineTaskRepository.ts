@@ -6,7 +6,7 @@ export class OnlineTaskRepository implements ITaskRepository {
   private static instance: OnlineTaskRepository;
   private constructor() {}
 
-  fetchTask(from: DateOnly): Promise<Task[]> {
+  fetchTask(_from: DateOnly): Promise<Task[]> {
     throw new Error("Method not implemented.");
   }
 
@@ -18,19 +18,19 @@ export class OnlineTaskRepository implements ITaskRepository {
     return OnlineTaskRepository.instance;
   }
 
-  createTask(task: Task): Promise<void> {
+  createTask(_task: Task): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  completeTask(id: number): Promise<void> {
+  completeTask(_id: number): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  reopenTask(id: number): Promise<void> {
+  reopenTask(_id: number): Promise<void> {
     throw new Error("Method not implemented.");
   }
 
-  deleteTask(id: number): Promise<void> {
+  deleteTask(_id: number): Promise<void> {
     throw new Error("Method not implemented.");
   }
 

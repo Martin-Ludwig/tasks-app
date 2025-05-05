@@ -6,14 +6,14 @@ import { useEffect, useState } from "react";
 interface TaskItemProps {
   tasks: Task[];
   onChangeState: (id: number, state: number) => void;
-  onDeleteTask: (id: number) => void;
+  //onDeleteTask: (id: number) => void;
   showToday: boolean;
 }
 
 export default function ScrollableTaskView({
   tasks,
   onChangeState,
-  onDeleteTask,
+  //onDeleteTask,
   showToday,
 }: TaskItemProps) {
   const [uniqueDates, setUniqueDates] = useState<DateOnly[]>([]);
@@ -49,7 +49,7 @@ export default function ScrollableTaskView({
               <TaskList
                 tasks={tasks.filter((task) => task.date.equal(date))}
                 onChangeState={onChangeState}
-                onDeleteTask={onDeleteTask}
+                //onDeleteTask={onDeleteTask}
               />
             </div>
           );

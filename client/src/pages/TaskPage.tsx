@@ -64,12 +64,12 @@ export default function TaskPage() {
     }
   };
 
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-    db.deleteTask(id).then(() => {
-      console.log("Task deleted");
-    });
-  };
+  // const deleteTask = (id: number) => {
+  //   setTasks(tasks.filter((task) => task.id !== id));
+  //   db.deleteTask(id).then(() => {
+  //     console.log("Task deleted");
+  //   });
+  // };
 
   return (
     <div className="">
@@ -78,7 +78,7 @@ export default function TaskPage() {
       <ScrollableTaskView
         tasks={tasks}
         onChangeState={changeState}
-        onDeleteTask={deleteTask}
+        //onDeleteTask={deleteTask}
         showToday={true}
       />
     </div>
