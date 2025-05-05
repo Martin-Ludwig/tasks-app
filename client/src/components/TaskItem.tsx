@@ -1,24 +1,28 @@
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card } from "@/components/ui/card";
-import Task from "../types/Task";
+import Task, { TaskStatus } from "../types/Task";
 
 interface TaskItemProps {
   task: Task;
-  onToggle: (id: number, state: boolean) => void;
+  onChangeState: (id: number, state: number) => void;
   onDelete: (id: number) => void;
 }
 
-export default function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
+
+function toggleDoneOpenTaskStatus(task: Task): number {
+  return task.status == TaskStatus.Open ? TaskStatus.Done : TaskStatus.Open;
+}
+
+export default function TaskItem({ task, onChangeState, onDelete }: TaskItemProps) {
   return (
-    <div className="flex items-center gap-2 my-2 text-lg"
-    onClick={() => onToggle(task.id, task.completed)}>
+    <div className="flex items-center gap-2 py-3 text-lg snap-start"
+    onClick={() => onChangeState(task.id,  toggleDoneOpenTaskStatus(task))}>
       <Checkbox
-        checked={task.completed}
-        onCheckedChange={() => onToggle(task.id, task.completed)}
+        checked={task.status === TaskStatus.Done}
+        onCheckedChange={() => onChangeState(task.id, toggleDoneOpenTaskStatus(task))}
         onClick={(e) => e.stopPropagation()} // verhindert doppelten Trigger
       />
       <span
-        className={task.completed ? "line-through text-muted-foreground" : ""}
+        className={task.status == TaskStatus.Done ? "line-through text-muted-foreground" : ""}
       >
         {task.text}
       </span>

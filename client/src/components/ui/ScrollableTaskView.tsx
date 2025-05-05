@@ -1,42 +1,69 @@
 import DateOnly from "@/types/DateOnly";
 import Task from "@/types/Task";
 import TaskList from "@/components/TaskList";
-import { Separator } from "@/components/ui/separator";
+import { useEffect, useState } from "react";
 
 interface TaskItemProps {
   tasks: Task[];
-  onToggleTask: (id: number, state: boolean) => void;
+  onChangeState: (id: number, state: number) => void;
   onDeleteTask: (id: number) => void;
+  showToday: boolean;
 }
 
 export default function ScrollableTaskView({
   tasks,
-  onToggleTask,
+  onChangeState,
   onDeleteTask,
+  showToday,
 }: TaskItemProps) {
+  const [uniqueDates, setUniqueDates] = useState<DateOnly[]>([]);
 
-  const uniqueDates = [...new Set(tasks.map((task) => task.date.toString()))];
+  useEffect(() => {
+    const rawDates = tasks.map((task) => task.date);
+    const allDates = showToday ? [DateOnly.today(), ...rawDates] : rawDates;
 
+    const uniqueSortedDates = removeDuplicateDates(allDates).sort((a, b) =>
+      a.compareTo(b)
+    );
+
+    setUniqueDates(uniqueSortedDates);
+  }, [tasks]);
 
   return (
-    <div className="h-100 bg-red-50 overflow-y-scroll snap-y snap-mandatory px-4 scrollbar-hidden ">
-      {uniqueDates.map((date) => {
-
-        return (
-          <div key={date} className="snap-center py-10 flex-shrink-0 flex flex-col"
-          >
-            {/* <Separator className="my-4" /> */}
-            <h2 className="text-xl font-bold text-center">{date}</h2>
-            <TaskList
-              tasks={tasks.filter((task) =>
-                task.date.equal(DateOnly.from(date))
-              )}
-              onToggleTask={onToggleTask}
-              onDeleteTask={onDeleteTask}
-            />
-          </div>
-        );
-      })}
+    <div className="h-100 overflow-y-scroll snap-y snap-proximity  px-4 scrollbar-hidden">
+      <div className="">
+        {uniqueDates.map((date) => {
+          return (
+            <div
+              key={date.toString()}
+              className="snap-start py-5 flex-shrink-0 flex flex-col"
+            >
+              {/* <Separator className="my-4" /> */}
+              <h2
+                className={`text-xl font-bold text-center ${
+                  !date.equal(DateOnly.today()) ? "text-muted-foreground" : ""
+                }`}
+              >
+                {date.print()}
+              </h2>
+              <TaskList
+                tasks={tasks.filter((task) => task.date.equal(date))}
+                onChangeState={onChangeState}
+                onDeleteTask={onDeleteTask}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
+
+  function removeDuplicateDates(dates: DateOnly[]): DateOnly[] {
+    const seen: DateOnly[] = [];
+    return dates.filter((date) => {
+      const isDuplicate = seen.some((d) => d.equal(date));
+      if (!isDuplicate) seen.push(date);
+      return !isDuplicate;
+    });
+  }
 }

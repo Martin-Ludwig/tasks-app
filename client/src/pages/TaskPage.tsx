@@ -1,11 +1,7 @@
 import AddTaskForm from "@/components/AddTaskForm";
-import TaskList from "@/components/TaskList";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import DateOnly from "@/types/DateOnly";
-import Task from "@/types/Task";
+import { Task, TaskStatus } from "@/types/Task";
 import { useEffect, useState } from "react";
-import { OnlineTaskRepository } from "@/repositories/OnlineTaskRepository";
 import { OfflineTaskRepository } from "@/repositories/OfflineTaskRepository";
 import ScrollableTaskView from "@/components/ui/ScrollableTaskView";
 
@@ -30,8 +26,8 @@ export default function TaskPage() {
     const task: Task = {
       id: Date.now(),
       date: DateOnly.today(),
-      text,
-      completed: false,
+      text: text,
+      status: TaskStatus.Open,
     };
     setTasks([...tasks, task]);
     db.createTask(task).then(() => {
@@ -39,20 +35,32 @@ export default function TaskPage() {
     });
   };
 
-  const toggleTask = (id: number, state: boolean) => {
+  const changeState = (id: number, state: number) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === id ? { ...task, completed: !task.completed } : task
+      task.id === id ? { ...task, status: state } : task
     );
 
     setTasks(updatedTasks);
-    if (state) {
-      db.reopenTask(id).then(() => {
-        console.log("Task reopeened");;
-      });
-    } else {
-      db.completeTask(id).then(() => {
-        console.log("Task completed");
-      });
+    // simple toggle open/done
+    // todo later: support other states
+
+    switch (state) {
+      case TaskStatus.Open: {
+        db.reopenTask(id).then(() => {
+          console.log("Task reopeened");
+        });
+        break;
+      }
+      case TaskStatus.Done: {
+        db.completeTask(id).then(() => {
+          console.log("Task completed");
+        });
+        break;
+      }
+      default: {
+        console.log("Task status not supported");
+        break;
+      }
     }
   };
 
@@ -65,15 +73,14 @@ export default function TaskPage() {
 
   return (
     <div className="">
-
       <AddTaskForm setNewTask={addTask} />
 
-      <ScrollableTaskView 
-              tasks={tasks}
-              onToggleTask={toggleTask}
-              onDeleteTask={deleteTask}
+      <ScrollableTaskView
+        tasks={tasks}
+        onChangeState={changeState}
+        onDeleteTask={deleteTask}
+        showToday={true}
       />
-
     </div>
   );
 }

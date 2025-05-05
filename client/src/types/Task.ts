@@ -1,10 +1,17 @@
 import DateOnly from "./DateOnly";
 
+export enum TaskStatus {
+  Open = 0, // 	Default/incomplete task
+  Done, // Task is finished
+  Cancelled, // 	No longer relevant
+  Scheduled, // Scheduled for a future date
+}
+
 export type Task = {
   id: number;
   text: string;
   date: DateOnly;
-  completed: boolean;
+  status: number; // Is TaskStatus, but its number for future customization
   lastUpdated?: Date;
 };
 
@@ -13,7 +20,7 @@ export function taskFromJSON(obj: any): Task {
     id: obj.id,
     text: obj.text,
     date: obj.date,
-    completed: obj.completed,
+    status: obj.status ?? TaskStatus.Open,
     lastUpdated: obj.lastUpdated ? new Date(obj.lastUpdated) : new Date(Date.now()),
   };
 }

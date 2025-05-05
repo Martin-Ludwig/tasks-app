@@ -1,5 +1,5 @@
 import DateOnly from "@/types/DateOnly";
-import Task from "@/types/Task";
+import Task, { TaskStatus } from "@/types/Task";
 import ITaskRepository from "./ITaskRepository";
 import { LocalStorage } from "./LocalStorage";
 
@@ -19,8 +19,7 @@ export class OfflineTaskRepository implements ITaskRepository {
 
   fetchTask(from: DateOnly): Promise<Task[]> {
     if (this.tasks.length === 0) {
-      const data = LocalStorage.getLocalStorage();
-      this.tasks = data;
+      this.init()
     }
     
     let ret = this.tasks.filter((task) => task.date.equal(from));
@@ -29,8 +28,7 @@ export class OfflineTaskRepository implements ITaskRepository {
 
   fetchTasks(): Promise<Task[]> {
     if (this.tasks.length === 0) {
-      const data = LocalStorage.getLocalStorage();
-      this.tasks = data;
+      this.init()
     }
     
     //let ret = this.tasks.filter((task) => task.date.equal(from));
@@ -45,7 +43,7 @@ export class OfflineTaskRepository implements ITaskRepository {
   completeTask(id: number): Promise<void> {
     const index = this.tasks.findIndex((task) => task.id == id);
     if (index !== -1) {
-      this.tasks[index].completed = true;
+      this.tasks[index].status = TaskStatus.Done;
     } else {
       throw new Error("Task not found");
     }
@@ -56,7 +54,7 @@ export class OfflineTaskRepository implements ITaskRepository {
   reopenTask(id: number): Promise<void> {
     const index = this.tasks.findIndex((task) => task.id == id);
     if (index !== -1) {
-      this.tasks[index].completed = false;
+      this.tasks[index].status = TaskStatus.Open;
     } else {
       throw new Error("Task not found");
     }
@@ -69,5 +67,10 @@ export class OfflineTaskRepository implements ITaskRepository {
     this.tasks = ret;
 
     return Promise.resolve(LocalStorage.setLocalStorage(this.tasks));
+  }
+
+  init() {
+    const data = LocalStorage.getLocalStorage();
+    this.tasks = data;
   }
 }
