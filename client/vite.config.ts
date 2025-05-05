@@ -7,9 +7,8 @@ import tailwindcss from "@tailwindcss/vite"
 export default defineConfig( ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
-
   return ({
-    base: '/tasks-app/',
+    base: env.VITE_BASE_PATH || '/',
     plugins: [react(), tailwindcss(),],
     resolve: {
       alias: {
