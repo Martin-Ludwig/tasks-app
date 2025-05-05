@@ -9,7 +9,7 @@ export default defineConfig( ({ mode }) => {
 
 
   return ({
-    base: env.VITE_BASE_URL || '/',
+    base: '/tasks-app/',
     plugins: [react(), tailwindcss(),],
     resolve: {
       alias: {
