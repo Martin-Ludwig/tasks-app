@@ -19,7 +19,7 @@ export function taskFromJSON(obj: any): Task {
   return {
     id: obj.id,
     text: obj.text,
-    date: obj.date,
+    date: DateOnly.from(obj.date),
     status: obj.status ?? TaskStatus.Open,
     lastUpdated: obj.lastUpdated ? new Date(obj.lastUpdated) : new Date(Date.now()),
   };

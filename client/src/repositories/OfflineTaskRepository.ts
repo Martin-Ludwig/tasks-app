@@ -2,6 +2,7 @@ import DateOnly from "@/types/DateOnly";
 import Task, { TaskStatus } from "@/types/Task";
 import ITaskRepository from "./ITaskRepository";
 import { LocalStorage } from "./LocalStorage";
+import { sample_data } from "./sample_data";
 
 export class OfflineTaskRepository implements ITaskRepository {
   private static instance: OfflineTaskRepository;
@@ -70,7 +71,17 @@ export class OfflineTaskRepository implements ITaskRepository {
   }
 
   init() {
-    const data = LocalStorage.getLocalStorage();
+    let data = LocalStorage.getLocalStorage();
+    
+    if (import.meta.env.VITE_SAMPLE_DATA_ENABLED === "true") {
+      let raw:Task[] = JSON.parse(sample_data);
+      raw.forEach(task => {
+        task.date = DateOnly.from(task.date.toString());
+      });
+      data = [...(raw)];
+    }
+
     this.tasks = data;
+    LocalStorage.setLocalStorage(this.tasks);
   }
 }
