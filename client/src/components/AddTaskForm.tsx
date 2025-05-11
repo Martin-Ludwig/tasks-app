@@ -29,7 +29,7 @@ export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
       />
       <Button
         onClick={onSubmit}
-        className="absolute right-2 top-1/2 size-8 -translate-y-1/2"
+        className="absolute rounded-full right-2 top-1/2 size-8 -translate-y-1/2"
       >
         +
       </Button>

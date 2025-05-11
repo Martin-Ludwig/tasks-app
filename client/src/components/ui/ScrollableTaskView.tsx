@@ -2,6 +2,8 @@ import DateOnly from "@/types/DateOnly";
 import Task from "@/types/Task";
 import TaskList from "@/components/TaskList";
 import { useEffect, useState, useRef } from "react";
+import { Separator } from "./separator";
+import Inspiration from "../Inspiration";
 
 interface TaskItemProps {
   tasks: Task[];
@@ -44,24 +46,26 @@ export default function ScrollableTaskView({
 
       setHasScrolled(true);
     }
-  }, [uniqueDates, hasScrolled]);
+  }, []);
 
   return (
     <div
       ref={scrollContainerRef}
-      className="h-100 overflow-y-scroll snap-y snap-proximity  px-4 scrollbar-hidden"
+      className="h-100 overflow-y-scroll snap-y snap-proximity scrollbar-hidden"
     >
-      <div className="">
+      <div className="p-2">
         {uniqueDates.map((date) => {
           return (
             <div
               key={date.toString()}
-              className="snap-start py-5 flex-shrink-0 flex flex-col"
+              className={`snap-start my-5 p-5 flex-shrink-0 flex flex-col shadow rounded-lg bg-card ${
+                  !date.equal(DateOnly.today()) ? "" : ""
+                }`}
             >
               {/* <Separator className="my-4" /> */}
               <h2
                 ref={date.equal(DateOnly.today()) ? todayRef : null}
-                className={`sticky top-0 bg-(--color-white) text-xl font-bold text-center ${
+                className={`sticky top-0 bg-card z-1 text-xl font-bold text-center ${
                   !date.equal(DateOnly.today()) ? "text-muted-foreground" : ""
                 }`}
               >
@@ -75,6 +79,11 @@ export default function ScrollableTaskView({
             </div>
           );
         })}
+
+        <Separator className="my-16" />
+        <Inspiration count={3} />
+        <Separator className="mt-16 mb-32" />
+
       </div>
     </div>
   );

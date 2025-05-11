@@ -4,6 +4,7 @@ import { Task, TaskStatus } from "@/types/Task";
 import { useEffect, useState } from "react";
 import { OfflineTaskRepository } from "@/repositories/OfflineTaskRepository";
 import ScrollableTaskView from "@/components/ui/ScrollableTaskView";
+import { Circle } from "@/components/Circle";
 
 export default function TaskPage() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -73,7 +74,9 @@ export default function TaskPage() {
 
   return (
     <div className="">
-      <AddTaskForm setNewTask={addTask} />
+      <div className="p-2">
+        <AddTaskForm setNewTask={addTask} />
+      </div>
 
       <ScrollableTaskView
         tasks={tasks}

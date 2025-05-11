@@ -8,7 +8,7 @@ export default function App() {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4">
+    <div className="max-w-xl mx-auto px-4 h-dvh">
       <div className="flex flex-col pt-10">
         <Logo />
         <h1 className="text-3xl font-bold">Tasks</h1>

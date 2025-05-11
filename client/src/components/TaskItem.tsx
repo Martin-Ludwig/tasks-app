@@ -14,7 +14,7 @@ function toggleDoneOpenTaskStatus(task: Task): number {
 
 export default function TaskItem({ task, onChangeState }: TaskItemProps) {
   return (
-    <div className="flex items-center gap-2 py-3 text-lg snap-start"
+    <div className="flex items-center gap-2 m-2 p-1 text-lg snap-start hover:bg-card-foreground"
     onClick={() => onChangeState(task.id,  toggleDoneOpenTaskStatus(task))}>
       <Checkbox
         checked={task.status === TaskStatus.Done}
@@ -22,7 +22,7 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
         onClick={(e) => e.stopPropagation()} // verhindert doppelten Trigger
       />
       <span
-        className={task.status == TaskStatus.Done ? "line-through text-muted-foreground" : ""}
+        className={`task.status == TaskStatus.Done ? "line-through text-muted-foreground" : ""} cursor-default`}
       >
         {task.text}
       </span>
