@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 type ThoughtPrompt = {
   category: string;
   prompts: string[];
@@ -57,12 +59,17 @@ type InspirationProps = {
   };
 
 export default function Inspiration({count}:InspirationProps) {
-  const randomThoughts = getRandomThoughts(count);
+
+  const [randomThoughts, setRandomThoughts] = useState<string[]>([]);
+  useEffect(() => {
+    setRandomThoughts(getRandomThoughts(count));
+  }, []);
+
 
   return (
 
-    randomThoughts.map((thought) => (
-      <div className="mb-4">
+    randomThoughts.map((thought, index) => (
+      <div key={index} className="mb-4">
         <p>{thought}</p>
       </div>
     ))

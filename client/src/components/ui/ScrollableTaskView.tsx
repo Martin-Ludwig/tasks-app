@@ -29,8 +29,6 @@ export default function ScrollableTaskView({
       a.compareTo(b)
     );
 
-    console.log(uniqueSortedDates);
-
     setUniqueDates(uniqueSortedDates);
     setHasScrolled(false);
   }, [tasks]);

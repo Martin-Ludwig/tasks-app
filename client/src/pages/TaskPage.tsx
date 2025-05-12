@@ -4,9 +4,10 @@ import { Task, TaskStatus } from "@/types/Task";
 import { useEffect, useState } from "react";
 import { OfflineTaskRepository } from "@/repositories/OfflineTaskRepository";
 import ScrollableTaskView from "@/components/ui/ScrollableTaskView";
+import ImageToTextFeature from "@/components/ImageToTextFeature";
 
 export default function TaskPage() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [allTasks, setAllTasks] = useState<Task[]>([]);
   //const db = OnlineTaskRepository.getInstance();
   const db = OfflineTaskRepository.getInstance();
 
@@ -14,7 +15,7 @@ export default function TaskPage() {
     let ignore = false;
     db.fetchTasks().then((tasks) => {
       if (!ignore) {
-        setTasks(tasks);
+        setAllTasks(tasks);
       }
     });
     return () => {
@@ -29,20 +30,18 @@ export default function TaskPage() {
       text: text,
       status: TaskStatus.Open,
     };
-    setTasks([...tasks, task]);
+    setAllTasks([...allTasks, task]);
     db.createTask(task).then(() => {
       console.log("Task created");
     });
   };
 
   const changeState = (id: number, state: number) => {
-    const updatedTasks = tasks.map((task) =>
+    const updatedTasks = allTasks.map((task) =>
       task.id === id ? { ...task, status: state } : task
     );
 
-    setTasks(updatedTasks);
-    // simple toggle open/done
-    // todo later: support other states
+    setAllTasks(updatedTasks);
 
     switch (state) {
       case TaskStatus.Open: {
@@ -64,25 +63,37 @@ export default function TaskPage() {
     }
   };
 
-  // const deleteTask = (id: number) => {
-  //   setTasks(tasks.filter((task) => task.id !== id));
-  //   db.deleteTask(id).then(() => {
-  //     console.log("Task deleted");
-  //   });
-  // };
+  const addTasks = (newTasks: Task[]) => { 
+    for (const task of newTasks) {
+      const newTask: Task = { 
+        id: Date.now() + Math.random(),
+        date: task.date,
+        text: task.text,
+        status: task.status,
+      };
+      setAllTasks(prevTasks => [...prevTasks, newTask]);
+      db.createTask(task).then(() => {
+        console.log("Task created", task.id);
+      });
+    }
+  }
 
   return (
-    <div className="">
+    <>
       <div className="p-2">
         <AddTaskForm setNewTask={addTask} />
       </div>
 
       <ScrollableTaskView
-        tasks={tasks}
+        tasks={allTasks}
         onChangeState={changeState}
         //onDeleteTask={deleteTask}
         showToday={true}
       />
-    </div>
+
+      <ImageToTextFeature onImportTasks={addTasks} />
+
+
+    </>
   );
 }

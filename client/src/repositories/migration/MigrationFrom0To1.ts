@@ -23,7 +23,7 @@ export class MigrateFrom0To1 implements IMigration {
             return this.version_to;
         }
         
-        let tasksV0 = JSON.parse(db) as TaskV0[];
+        let tasksV0 = JSON.parse(db.trim()) as TaskV0[];
         let tasksV1: Task[] = [];
 
         tasksV1 = tasksV0.map((task) => {
