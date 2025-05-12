@@ -63,20 +63,20 @@ export default function TaskPage() {
     }
   };
 
-  const addTasks = (newTasks: Task[]) => { 
+  const addTasks = (newTasks: Task[]) => {
     for (const task of newTasks) {
-      const newTask: Task = { 
+      const newTask: Task = {
         id: Date.now() + Math.random(),
         date: task.date,
         text: task.text,
         status: task.status,
       };
-      setAllTasks(prevTasks => [...prevTasks, newTask]);
+      setAllTasks((prevTasks) => [...prevTasks, newTask]);
       db.createTask(task).then(() => {
         console.log("Task created", task.id);
       });
     }
-  }
+  };
 
   return (
     <>
@@ -91,9 +91,9 @@ export default function TaskPage() {
         showToday={true}
       />
 
-      <ImageToTextFeature onImportTasks={addTasks} />
-
-
+      <div className="z-100">
+        <ImageToTextFeature onImportTasks={addTasks} />
+      </div>
     </>
   );
 }
