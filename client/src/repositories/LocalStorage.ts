@@ -11,6 +11,7 @@ export class LocalStorage {
   static setLocalStorage(data: Task[]) {
     if (LocalStorage.STORAGE_ENABLED === "false") return;
 
+    console.log(`Saving to local storage. (${data.length} items)`);
     localStorage.setItem(LocalStorage.STORAGE_KEY, JSON.stringify(data));
   }
 
@@ -18,6 +19,7 @@ export class LocalStorage {
     if (LocalStorage.STORAGE_ENABLED === "false")
       return "[]";
 
+    console.log("Get raw local storage");
     return localStorage.getItem(LocalStorage.STORAGE_KEY) ?? "[]";
   }
 
@@ -28,7 +30,9 @@ export class LocalStorage {
     try {
       const storage = localStorage.getItem(LocalStorage.STORAGE_KEY) ?? "[]";
       const raw = JSON.parse(storage);
-      return rehydrateTasks(raw);
+      const tasks = rehydrateTasks(raw);
+      console.log(`Get local storage. (${tasks.length} items)`);
+      return tasks;
     } catch (e) {
       console.error("Fehler beim Parsen von localStorage:", e);
       return [];
@@ -38,6 +42,7 @@ export class LocalStorage {
   static clearLocalStorage() {
     if (LocalStorage.STORAGE_ENABLED === "false") return;
 
+    console.log("Clear local storage");
     localStorage.removeItem(LocalStorage.STORAGE_KEY);
   }
 }

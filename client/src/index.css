@@ -29,11 +29,14 @@
   --color-primary-muted: oklch(0.64 0.021 248.16);
   --color-rose: oklch(0.645 0.246 27.25); /* var(--color-rose); */
   --color-white: oklch(0.99 0.0057 84.57); /* var(--color-white); */
+  --color-blue: oklch(0.25 0.0546 250.91); /* var(--color-primary); */
   --color-background: oklch(1 0 0);
   --color-card: oklch(0.95 0.1941 108.32);
 }
 
 :root {
+  --blue: var(--color-blue);
+  --title: var(--color-rose);
   --radius: 0.5rem;
   --background: var(--color-white);
   --foreground: var(--color-foreground);
@@ -103,6 +106,8 @@
 }
 
 @theme inline {
+  --color-bluee: var(--color-blue);
+  --color-title: var(--title);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

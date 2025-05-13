@@ -32,11 +32,11 @@ export class OfflineTaskRepository implements ITaskRepository {
       this.init()
     }
     
-    //let ret = this.tasks.filter((task) => task.date.equal(from));
     return Promise.resolve(this.tasks);
   }
 
   createTask(task: Task): Promise<void> {
+    console.log("Offline Task Repo: create task", task);
     this.tasks.push(task);
     return Promise.resolve(LocalStorage.setLocalStorage(this.tasks));
   }
@@ -71,17 +71,21 @@ export class OfflineTaskRepository implements ITaskRepository {
   }
 
   init() {
+    console.log("init offline task repo");
     let data = LocalStorage.getLocalStorage();
+    this.tasks = data;
     
-    if (import.meta.env.VITE_SAMPLE_DATA_ENABLED === "true") {
+    if (import.meta.env.VITE_SAMPLE_DATA_ENABLED === "true" && data.length === 0) {
+      console.log("import sample data");
       let raw:Task[] = JSON.parse(sample_data);
       raw.forEach(task => {
         task.date = DateOnly.from(task.date.toString());
       });
-      data = [...(raw)];
-    }
+      data.push(...raw)
 
-    this.tasks = data;
-    LocalStorage.setLocalStorage(this.tasks);
+      this.tasks = data;
+      LocalStorage.setLocalStorage(this.tasks);
+    }
+    
   }
 }

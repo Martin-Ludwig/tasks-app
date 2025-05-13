@@ -14,9 +14,9 @@ export default defineConfig( ({ mode }) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
-    },
-    build: {
-      sourcemap: 'hidden'
     }
+    // build: {
+    //   sourcemap: mode === "development" ? 'hidden' : false
+    // }
   });
 });

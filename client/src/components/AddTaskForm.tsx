@@ -17,7 +17,7 @@ export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
   };
 
   return (
-    <div className="block relative h-12 mb-8 flex gap-2">
+    <div className="block relative h-12 flex gap-2">
       <TaskInput
         autoFocus 
         type="text"

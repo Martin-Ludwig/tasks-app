@@ -31,7 +31,7 @@ export default function CameraInput({ onCapture }: CameraInputProps) {
       />
       <label
         htmlFor="cameraInput"
-        className="flex items-center justify-center w-16 h-16 bg-primary hover:bg-primary/90 text-white rounded-full cursor-pointer transition"
+        className="flex items-center justify-center w-14 h-14 bg-linear-to-br from-primary to-title hover:brightness-110 text-white rounded-full cursor-pointer transition"
       >
         <Camera size={24} />
       </label>

@@ -49,7 +49,7 @@ export default function ScrollableTaskView({
   return (
     <div
       ref={scrollContainerRef}
-      className="h-100 overflow-y-scroll snap-y snap-proximity scrollbar-hidden"
+      className="max-h-dvh flex flex-col flex-grow overflow-y-scroll snap-y snap-proximity scrollbar-hidden"
     >
       <div className="p-2">
         {uniqueDates.map((date) => {

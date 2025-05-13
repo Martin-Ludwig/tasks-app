@@ -18,6 +18,7 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
       onClick={() => onChangeState(task.id, toggleDoneOpenTaskStatus(task))}
     >
       <Checkbox
+      className="border-muted-foreground"
         checked={task.status === TaskStatus.Done}
         onCheckedChange={() =>
           onChangeState(task.id, toggleDoneOpenTaskStatus(task))

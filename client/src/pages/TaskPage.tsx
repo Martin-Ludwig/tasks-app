@@ -80,7 +80,7 @@ export default function TaskPage() {
 
   return (
     <>
-      <div className="p-2">
+      <div className="p-2 mb-4">
         <AddTaskForm setNewTask={addTask} />
       </div>
 

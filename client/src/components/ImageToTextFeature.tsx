@@ -52,7 +52,7 @@ export default function ImageToTextFeature({
         onImport={handleTaskImport}
       />
 
-      <div className="absolute bottom-10 right-10">
+      <div className="absolute bottom-5 right-5 z-100">
         <CameraInput onCapture={handleCapture} />
       </div>
     </>
