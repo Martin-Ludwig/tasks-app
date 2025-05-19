@@ -23,12 +23,12 @@ export default function TaskPage() {
     };
   }, []);
 
-  const addTask = (text: string) => {
+  const addTask = (text: string, state: number) => {
     const task: Task = {
       id: Date.now(),
       date: DateOnly.today(),
       text: text,
-      status: TaskStatus.Open,
+      status: state,
     };
     setAllTasks([...allTasks, task]);
     db.createTask(task).then(() => {
@@ -36,12 +36,17 @@ export default function TaskPage() {
     });
   };
 
+  const removeTask = (id: number) => {
+    const updatedTasks = allTasks.filter((task) => task.id !== id);
+    setAllTasks(updatedTasks);
+  };
+
   const changeState = (id: number, state: number) => {
     const updatedTasks = allTasks.map((task) =>
       task.id === id ? { ...task, status: state } : task
     );
-
     setAllTasks(updatedTasks);
+    
 
     switch (state) {
       case TaskStatus.Open: {
@@ -50,17 +55,31 @@ export default function TaskPage() {
         });
         break;
       }
-      case TaskStatus.Done: {
+      case TaskStatus.Completed: {
         db.completeTask(id).then(() => {
           console.log("Task completed");
         });
         break;
       }
-      default: {
-        console.log("Task status not supported");
+      case TaskStatus.Irrelevant: {
+        db.deleteTask(id).then(() => {
+          console.log("Task deleted");
+        });
+        removeTask(id); // remove from local task state
         break;
       }
+      default: {
+        if (state >= 0 && state <= 7) {
+          db.changeStatus(id, state).then(() => {
+            console.log("Task status changed");
+          });
+          break;
+        }
+      }
     }
+
+
+
   };
 
   const addTasks = (newTasks: Task[]) => {
@@ -87,7 +106,6 @@ export default function TaskPage() {
       <ScrollableTaskView
         tasks={allTasks}
         onChangeState={changeState}
-        //onDeleteTask={deleteTask}
         showToday={true}
       />
 

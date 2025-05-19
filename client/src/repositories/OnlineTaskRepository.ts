@@ -53,7 +53,7 @@ export class OnlineTaskRepository implements ITaskRepository {
       id: 2,
       text: "Workout machen",
       date: DateOnly.from("2025-04-27"),
-      status: TaskStatus.Done,
+      status: TaskStatus.Completed,
       lastUpdated: new Date("2025-04-27T07:30:00Z"),
     },
     {
@@ -72,7 +72,7 @@ export class OnlineTaskRepository implements ITaskRepository {
       id: 5,
       text: "Auto waschen",
       date: DateOnly.from("2025-04-27"),
-      status: TaskStatus.Done,
+      status: TaskStatus.Completed,
       lastUpdated: new Date("2025-04-30T11:00:00Z"),
     },
   ];

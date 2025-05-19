@@ -1,6 +1,25 @@
 import DateOnly from "@/types/DateOnly";
 import { Task, TaskStatus } from "@/types/Task";
 
+// const OCR_API_KEY = "your-mistral-api-key";
+// const OCR_API_ENDPOINT = "your-mistral-api-key";
+
+async function sendToMistral(imageAsBase64: string) {
+  const response = await fetch("http://localhost:32768/tasks-read-image", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ "base64": imageAsBase64})
+  });
+
+  console.log("sendToMistral response:\n", response);
+  const data = await response.json();
+  return data;
+}
+
+
+
 function wait(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -33,4 +52,4 @@ const sample_data = `[
       "text": "Termin mit Arzt vereinbaren"
 }]`;
 
-export { OCRsendRequest };
+export { OCRsendRequest , sendToMistral};
