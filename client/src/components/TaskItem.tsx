@@ -17,6 +17,7 @@ import {
   X,
 } from "lucide-react";
 import StatusIconMap from "./StatusIconMap";
+import { useEffect, useState } from "react";
 
 interface TaskItemProps {
   task: Task;
@@ -31,6 +32,18 @@ function toggleDoneOpenTaskStatus(task: Task): number {
 }
 
 export default function TaskItem({ task, onChangeState }: TaskItemProps) {
+  const [open, setOpen] = useState(false);
+  const [interactionEnabled, setInteractionEnabled] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      const timeout = setTimeout(() => setInteractionEnabled(true), 150);
+      return () => clearTimeout(timeout);
+    } else {
+      setInteractionEnabled(false);
+    }
+  }, [open]);
+
   return (
     <div
       className="flex items-center gap-2 m-2 p-1 text-lg snap-start hover:bg-card-foreground"
@@ -65,7 +78,7 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
         {task.text}
       </label>
 
-      <DropdownMenu>
+      <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <button
             onClick={(e) => e.stopPropagation()}
@@ -74,7 +87,10 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
             <EllipsisVertical className="w-5 h-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent onClick={(e) => e.stopPropagation()}>
+        <DropdownMenuContent
+          onClick={(e) => e.stopPropagation()}
+          className={interactionEnabled ? "" : "pointer-events-none opacity-50"}
+        >
           <DropdownMenuItem
             disabled={task.status === TaskStatus.Open}
             onClick={() => {
@@ -137,7 +153,9 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
           <DropdownMenuItem
             disabled={task.status === TaskStatus.Irrelevant}
             onClick={() => {
-              onChangeState(task.id, TaskStatus.Irrelevant);
+              if (confirm("Wirklich löschen?")) {
+                onChangeState(task.id, TaskStatus.Irrelevant);
+              }
             }}
           >
             <X className="w-4 h-4 mr-2 text-red-500" />
