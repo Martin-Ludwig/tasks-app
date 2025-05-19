@@ -44,7 +44,7 @@ export class OfflineTaskRepository implements ITaskRepository {
   completeTask(id: number): Promise<void> {
     const index = this.tasks.findIndex((task) => task.id == id);
     if (index !== -1) {
-      this.tasks[index].status = TaskStatus.Done;
+      this.tasks[index].status = TaskStatus.Completed;
     } else {
       throw new Error("Task not found");
     }
@@ -56,6 +56,17 @@ export class OfflineTaskRepository implements ITaskRepository {
     const index = this.tasks.findIndex((task) => task.id == id);
     if (index !== -1) {
       this.tasks[index].status = TaskStatus.Open;
+    } else {
+      throw new Error("Task not found");
+    }
+
+    return Promise.resolve(LocalStorage.setLocalStorage(this.tasks));
+  }
+
+  changeStatus(id: number, status: TaskStatus): Promise<void> {
+    const index = this.tasks.findIndex((task) => task.id == id);
+    if (index !== -1) {
+      this.tasks[index].status = status;
     } else {
       throw new Error("Task not found");
     }

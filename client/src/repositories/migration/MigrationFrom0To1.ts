@@ -31,7 +31,7 @@ export class MigrateFrom0To1 implements IMigration {
                 id: task.id,
                 text: task.text,
                 date: task.date,
-                status: task.completed ? TaskStatus.Done : TaskStatus.Open,
+                status: task.completed ? TaskStatus.Completed : TaskStatus.Open,
                 lastUpdated: task.lastUpdated,
             };
         });

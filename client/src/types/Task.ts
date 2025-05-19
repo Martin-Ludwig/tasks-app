@@ -1,10 +1,14 @@
 import DateOnly from "./DateOnly";
 
+// Using short-form notation paired with symbols to quickly capture, categorize, and prioritize your thoughts into Notes, Events, and Tasks.
 export enum TaskStatus {
-  Open = 0, // 	Default/incomplete task
-  Done, // Task is finished
-  Cancelled, // 	No longer relevant
-  Scheduled, // Scheduled for a future date
+  Open = 0, // Entries that require you to take action. (Default)
+  Completed, // Action has been completed.
+  Irrelevant, // Sometimes the things we task ourselves with end up not mattering anymore. Their meaning simply expires or circumstances change. If it no longer matters, then it’s a distraction. Strike it off your list. One less thing to worry about.
+  Migrated, //  Tasks that have been moved forward (hence the right arrow >) into your next Monthly Log or into a specific Collection.
+  Scheduled, // A Task tied to a date that falls outside of the current month and is therefore moved backward (hence the left arrow <) into the Future Log (this page ) at the front of your book.
+  Note,
+  Event,
 }
 
 export type Task = {
