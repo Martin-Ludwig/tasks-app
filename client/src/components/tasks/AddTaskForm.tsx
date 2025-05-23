@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import TaskInput from "./ui/TaskInput";
-import { CircleSmall, Minus, Plus } from "lucide-react";
+import TaskInput from "../ui/TaskInput";
+import { Plus } from "lucide-react";
 import { TaskStatus } from "@/types/Task";
 
 interface AddTaskFormProps {
@@ -31,7 +31,7 @@ export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
         className="h-12 full text-lg pr-30"
       />
       <div className="flex gap-1 absolute top-1/2 -translate-y-1/2 right-2">
-        <Button
+        {/* <Button
           onClick={() => onSubmit(TaskStatus.Note)}
           className="rounded-full size-8 bg-blue-400 p-0"
         >
@@ -42,7 +42,7 @@ export default function AddTaskForm({ setNewTask }: AddTaskFormProps) {
           className="rounded-full size-8 bg-blue-400 p-0"
         >
           <CircleSmall size={20} />
-        </Button>
+        </Button> */}
         <Button onClick={() => onSubmit(TaskStatus.Open)} className="rounded-full size-8 p-0">
           <Plus size={20} />
         </Button>

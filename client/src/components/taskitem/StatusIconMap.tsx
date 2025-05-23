@@ -3,8 +3,9 @@ import {
   ArrowLeft,
   ArrowRight,
   CircleSmall,
-  Dot,
   Minus,
+  Square,
+  SquareCheckBig,
   X,
 } from "lucide-react";
 import {
@@ -12,7 +13,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from "../ui/tooltip";
 
 interface StatusIconMapProps {
   state: number;
@@ -48,7 +49,7 @@ export default function StatusIconMap({ state }: StatusIconMapProps) {
 export function OpenIcon() {
   return (
     <StatusIcon tooltip="Offen">
-      <Dot size={iconsize} />
+      <Square size={iconsize} />
     </StatusIcon>
   );
 }
@@ -56,7 +57,7 @@ export function OpenIcon() {
 export function CompletedIcon() {
   return (
     <StatusIcon tooltip="Completed">
-      <X size={iconsize} />
+      <SquareCheckBig size={iconsize} />
     </StatusIcon>
   );
 }

@@ -1,3 +1,4 @@
+/*
 import { Checkbox } from "@/components/ui/checkbox";
 import Task, { TaskStatus } from "../types/Task";
 import {
@@ -16,7 +17,7 @@ import {
   Minus,
   X,
 } from "lucide-react";
-import StatusIconMap from "./StatusIconMap";
+import StatusIconMap from "./taskitem/StatusIconMap";
 import { useEffect, useState } from "react";
 
 interface TaskItemProps {
@@ -50,7 +51,7 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
       onClick={() => onChangeState(task.id, toggleDoneOpenTaskStatus(task))}
     >
       <Checkbox
-        id="taskCeckbox"
+        id="taskCheckbox"
         className="hidden border-muted-foreground"
         checked={task.status === TaskStatus.Completed}
         onCheckedChange={() =>
@@ -166,3 +167,4 @@ export default function TaskItem({ task, onChangeState }: TaskItemProps) {
     </div>
   );
 }
+*/
