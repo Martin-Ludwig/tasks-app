@@ -2,6 +2,7 @@ import DateOnly from "./DateOnly";
 
 // Using short-form notation paired with symbols to quickly capture, categorize, and prioritize your thoughts into Notes, Events, and Tasks.
 export enum TaskStatus {
+  SoftDelete = -1, // Entries that have been deleted.
   Open = 0, // Entries that require you to take action. (Default)
   Completed, // Action has been completed.
   Irrelevant, // Sometimes the things we task ourselves with end up not mattering anymore. Their meaning simply expires or circumstances change. If it no longer matters, then it’s a distraction. Strike it off your list. One less thing to worry about.

@@ -1,10 +1,10 @@
-import AddTaskForm from "@/components/AddTaskForm";
+import AddTaskForm from "@/components/tasks/AddTaskForm";
 import DateOnly from "@/types/DateOnly";
 import { Task, TaskStatus } from "@/types/Task";
 import { useEffect, useState } from "react";
 import { OfflineTaskRepository } from "@/repositories/OfflineTaskRepository";
-import ScrollableTaskView from "@/components/ui/ScrollableTaskView";
-import ImageToTextFeature from "@/components/ImageToTextFeature";
+import ScrollableTaskView from "@/components/tasks/ScrollableTaskView";
+import ImageToTextFeature from "@/components/ocr/ImageToTextFeature";
 
 export default function TaskPage() {
   const [allTasks, setAllTasks] = useState<Task[]>([]);

@@ -1,8 +1,8 @@
 import DateOnly from "@/types/DateOnly";
 import Task from "@/types/Task";
-import TaskList from "@/components/TaskList";
+import TaskList from "@/components/tasks/TaskList";
 import { useEffect, useState, useRef } from "react";
-import { Separator } from "./separator";
+import { Separator } from "../ui/separator";
 import Inspiration from "../Inspiration";
 
 interface TaskItemProps {
