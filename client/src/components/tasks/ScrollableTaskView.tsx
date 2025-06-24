@@ -56,7 +56,7 @@ export default function ScrollableTaskView({
           return (
             <div
               key={date.toString()}
-              className={`snap-start my-5 p-5 flex-shrink-0 flex flex-col shadow rounded-lg bg-card ${
+              className={`snap-start my-4 p-2 flex-shrink-0 flex flex-col shadow rounded-lg bg-card ${
                   !date.equal(DateOnly.today()) ? "" : ""
                 }`}
             >

@@ -19,46 +19,48 @@ function toggleDoneOpenTaskStatus(task: Task): number {
 }
 
 export default function TaskItem({ task, onChangeState }: TaskItemProps) {
-    const [open, setOpen] = useState(false);
-    const [interactionEnabled, setInteractionEnabled] = useState(false);
-  
-    useEffect(() => {
-      if (open) {
-        const timeout = setTimeout(() => setInteractionEnabled(true), 500);
-        return () => clearTimeout(timeout);
-      } else {
-        setInteractionEnabled(false);
-      }
-    }, [open]);
-  
-    const toggleStatus = () => {
-      onChangeState(task.id, toggleDoneOpenTaskStatus(task));
-    };
-  
-    return (
-      <div
-        className="flex items-center gap-2 m-2 p-1 text-lg snap-start hover:bg-card-foreground"
-        onClick={toggleStatus}
-      >
-        <StatusIconMap state={task.status} />
+  const [open, setOpen] = useState(false);
+  const [interactionEnabled, setInteractionEnabled] = useState(false);
 
-        <TaskCheckbox task={task} onToggle={toggleStatus} />
-  
-        <DropdownMenu open={open} onOpenChange={setOpen}>
-          <DropdownMenuTrigger asChild>
-            <button
-              onClick={(e) => e.stopPropagation()}
-              className="ml-auto p-1 text-muted-foreground hover:text-blue focus:border-none rounded"
-            >
-              <EllipsisVertical className="w-5 h-5" />
-            </button>
-          </DropdownMenuTrigger>
-          <TaskOptions
-            task={task}
-            onChangeState={onChangeState}
-            interactionEnabled={interactionEnabled}
-          />
-        </DropdownMenu>
+  useEffect(() => {
+    if (open) {
+      const timeout = setTimeout(() => setInteractionEnabled(true), 500);
+      return () => clearTimeout(timeout);
+    } else {
+      setInteractionEnabled(false);
+    }
+  }, [open]);
+
+  const toggleStatus = () => {
+    onChangeState(task.id, toggleDoneOpenTaskStatus(task));
+  };
+
+  return (
+    <div
+      className="flex items-center gap-2 m-2 p-1 text-lg snap-start hover:bg-card-foreground"
+      onClick={toggleStatus}
+    >
+      <div className="">
+        <StatusIconMap state={task.status} />
       </div>
-    );
-  }
+
+      <TaskCheckbox task={task} onToggle={toggleStatus} />
+
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <button
+            onClick={(e) => e.stopPropagation()}
+            className="ml-auto text-muted-foreground hover:text-blue focus:border-none rounded"
+          >
+            <EllipsisVertical className="w-5 h-5" />
+          </button>
+        </DropdownMenuTrigger>
+        <TaskOptions
+          task={task}
+          onChangeState={onChangeState}
+          interactionEnabled={interactionEnabled}
+        />
+      </DropdownMenu>
+    </div>
+  );
+}

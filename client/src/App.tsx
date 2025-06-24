@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <>
-      <div className="h-dvh max-w-xl mx-auto px-4 flex flex-col overflow-hidden">
+      <div className="h-dvh max-w-xl mx-auto px-1 flex flex-col overflow-hidden">
         <div className="flex gap-4 pt-4 items-baseline px-2">
           <Logo />
           <h1 className="text-4xl font-bold h-full bg-linear-to-b from-title from-10% to-primary bg-clip-text text-transparent">Tasks</h1>
